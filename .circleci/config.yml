@@ -31,7 +31,7 @@ jobs:
           path: ~/test-results/junit
           
 workflows:
-  my-workflow:
+  build-and-test:
     jobs:
       - build
       - maven-test
