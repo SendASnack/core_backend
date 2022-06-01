@@ -5,11 +5,12 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: mvn package
-      - persist_to_workspace:
-         root: ./
-         paths:
-           - target/
+      - run: mvn package -Dmaven.test.skip=true
+      - run:
+          ls
+      - store_artifacts:
+          path: target/
+          destination: artifact-file
   maven-test:
     machine: true
     steps:
