@@ -4,6 +4,7 @@ jobs:
   maven-test:
     machine: true
     steps:
+      - checkout
       - run: mvn verify
 
 workflows:
