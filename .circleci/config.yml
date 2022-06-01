@@ -1,6 +1,15 @@
 version: 2.1
 
 jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: mvn package
+      - persist_to_workspace:
+         root: ./
+         paths:
+           - target/
   maven-test:
     machine: true
     steps:
