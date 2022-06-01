@@ -6,7 +6,11 @@ jobs:
     steps:
       - checkout
       - run: mvn verify
-
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: /tmp/artifacts
+          
 workflows:
   my-workflow:
     jobs:
