@@ -4,7 +4,6 @@ jobs:
   maven-test:
     machine: true
     steps:
-      - setup_remote_docker
       - run: mvn verify
 
 workflows:
