@@ -7,9 +7,13 @@ jobs:
       - checkout
       - run: mvn package -Dmaven.test.skip=true
       - run:
-          ls
+          name: Copy JAR file
+          command: |
+            mkdir -p ~/artifacts/
+            cd ./target
+            find . -name "*.jar" -exec cp {} ~/test-results/junit/ \;
       - store_artifacts:
-          path: target/
+          path: ~/artifacts
           destination: artifact-file
   maven-test:
     machine: true
