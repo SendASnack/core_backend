@@ -1,14 +1,39 @@
 version: 2.1
 
 jobs:
-  maven-test:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: mvn package -Dmaven.test.skip=true
+      - run:
+          name: Copy JAR file
+          command: |
+            mkdir -p ~/artifacts/
+            cd ./target
+            find . -name "*.jar" -exec cp {} ~/artifacts/ \;
+      - store_artifacts:
+          path: ~/artifacts
+          destination: artifact-file
+  test:
     machine: true
     steps:
       - checkout
       - run: mvn verify
-
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+            find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results/junit
+          
 workflows:
-  my-workflow:
+  build-and-test:
     jobs:
-      - maven-test
+      - test
+      - build
+
       
