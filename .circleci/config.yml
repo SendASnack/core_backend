@@ -15,7 +15,7 @@ jobs:
       - store_artifacts:
           path: ~/artifacts
           destination: artifact-file
-  maven-test:
+  test:
     machine: true
     steps:
       - checkout
@@ -33,6 +33,7 @@ jobs:
 workflows:
   build-and-test:
     jobs:
+      - test
       - build
-      - maven-test
+
       
