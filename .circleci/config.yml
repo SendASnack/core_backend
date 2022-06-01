@@ -5,3 +5,5 @@ workflows:
   maven_test:
     jobs:
       - maven/test
+      - setup_remote_docker:
+          version: 20.10.14
