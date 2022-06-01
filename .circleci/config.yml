@@ -1,7 +1,14 @@
 version: 2.1
-orbs: 
-  maven: circleci/maven@1.3.0
+
+jobs:
+  maven-test:
+    machine: true
+    steps:
+      - checkout
+      - run: mvn verify
+
 workflows:
-  maven_test:
+  my-workflow:
     jobs:
-      - maven/test
+      - maven-test
+      

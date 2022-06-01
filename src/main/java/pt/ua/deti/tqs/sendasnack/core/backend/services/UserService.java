@@ -8,6 +8,8 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.UserNotF
 import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -42,6 +44,14 @@ public class UserService {
             throw new AlreadyExistentUserException("The provided username is already taken.");
         userRepository.save(user);
 
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void removeAll() {
+        userRepository.deleteAll();
     }
 
 }
