@@ -7,6 +7,7 @@ import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
 import javax.persistence.*;
 import java.util.Objects;
 
+
 @Entity
 @Generated
 @Getter

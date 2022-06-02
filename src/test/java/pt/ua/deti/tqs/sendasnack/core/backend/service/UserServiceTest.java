@@ -15,8 +15,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
