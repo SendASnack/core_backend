@@ -39,6 +39,11 @@ class AuthControllerIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private UserService userService;
+
+    private UserDAO userDAO;
+
     @Container
     public static final MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
             .withDatabaseName("SendASnack_Core_Test")
@@ -55,11 +60,6 @@ class AuthControllerIT {
         registry.add("spring.datasource.password", mariaDb::getPassword);
 
     }
-
-    @Autowired
-    private UserService userService;
-
-    private UserDAO userDAO;
 
     @BeforeEach
     public void setUp() {
