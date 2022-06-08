@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.service;
+package pt.ua.deti.tqs.sendasnack.core.backend.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

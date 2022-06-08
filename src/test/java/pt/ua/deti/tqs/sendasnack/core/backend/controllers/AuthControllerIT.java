@@ -1,23 +1,17 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.controller;
+package pt.ua.deti.tqs.sendasnack.core.backend.controllers;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.junit.jupiter.Container;
@@ -27,7 +21,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.ErrorDetails;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
-import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.requests.LoginRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
@@ -47,7 +40,7 @@ class AuthControllerIT {
     private TestRestTemplate restTemplate;
 
     @Container
-    public static MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
+    public static final MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
             .withDatabaseName("SendASnack_Core_Test")
             .withUsername("admin")
             .withPassword("admin")

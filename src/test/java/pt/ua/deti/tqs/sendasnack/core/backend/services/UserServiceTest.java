@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.service;
+package pt.ua.deti.tqs.sendasnack.core.backend.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +14,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.UserNotF
 import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
-
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

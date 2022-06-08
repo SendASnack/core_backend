@@ -9,8 +9,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
 
 @Component
 public class AuthEntryPoint implements AuthenticationEntryPoint {
@@ -20,7 +18,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        MessageResponse messageResponse = new MessageResponse(Date.from(Instant.now()), authException.getMessage());
+        MessageResponse messageResponse = new MessageResponse(authException.getMessage());
 
         response.addHeader("Content-Type", "application/json");
 
