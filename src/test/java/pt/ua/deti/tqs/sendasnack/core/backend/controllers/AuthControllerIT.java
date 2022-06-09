@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.controller;
+package pt.ua.deti.tqs.sendasnack.core.backend.controllers;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ class AuthControllerIT {
     private UserDAO userDAO;
 
     @Container
-    public static MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
+    public static final MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
             .withDatabaseName("SendASnack_Core_Test")
             .withUsername("admin")
             .withPassword("admin")

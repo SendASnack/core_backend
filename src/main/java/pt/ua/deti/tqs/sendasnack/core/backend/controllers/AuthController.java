@@ -15,9 +15,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.JWTTokenUtils;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.SpringUserDetailsService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
-import java.time.Instant;
-import java.util.Date;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -44,7 +41,7 @@ public class AuthController {
 
         userService.registerUser(userDAO.toDataEntity());
 
-        return new MessageResponse(Date.from(Instant.now()), "The user was successfully registered!");
+        return new MessageResponse("The user was successfully registered!");
 
     }
 
