@@ -13,6 +13,8 @@ import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthHandler;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.DeliveryService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.OrderRequestService;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.WebHookEvent;
+import pt.ua.deti.tqs.sendasnack.core.backend.webhooks.WebHookHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +26,14 @@ public class BusinessController {
     private final AuthHandler authHandler;
     private final OrderRequestService orderRequestService;
     private final DeliveryService deliveryService;
+    private final WebHookHandler webHookHandler;
 
     @Autowired
-    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService, DeliveryService deliveryService) {
+    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService, DeliveryService deliveryService, WebHookHandler webHookHandler) {
         this.authHandler = authHandler;
         this.orderRequestService = orderRequestService;
         this.deliveryService = deliveryService;
+        this.webHookHandler = webHookHandler;
     }
 
     @PostMapping("/orders")
@@ -91,6 +95,8 @@ public class BusinessController {
 
         orderRequest.setOrderStatus(orderStatus);
         orderRequestService.save(orderRequest);
+
+        webHookHandler.notifyAllHooks(authHandler.getCurrentUsername(), WebHookEvent.DELIVERY_STATUS, orderStatus.toString(), orderId);
 
         return new MessageResponse(String.format("The status of the order %s was changed to %s.", orderId, orderStatus));
 

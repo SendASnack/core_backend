@@ -20,7 +20,6 @@ import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.Delivery;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
-import pt.ua.deti.tqs.sendasnack.core.backend.repository.DeliveryRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.OrderRequestRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
