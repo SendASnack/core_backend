@@ -30,8 +30,6 @@ class DeliveryRepositoryIT {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    private OrderRequest orderRequest;
-    private Delivery deliveryWithRider;
     private Delivery deliveryWithoutRider;
 
     @Container
@@ -53,8 +51,7 @@ class DeliveryRepositoryIT {
 
     @BeforeEach
     void setUp() {
-        orderRequest = new OrderRequest(null, "", new Costumer(null, "", "", new Address()), new Order(), Date.from(Instant.now()), OrderStatus.READY);
-        deliveryWithRider = new Delivery(1L, orderRequest, Date.from(Instant.now()), DeliveryStatus.READY, new RiderUser());
+        OrderRequest orderRequest = new OrderRequest(null, "", new Costumer(null, "", "", new Address()), new Order(), Date.from(Instant.now()), OrderStatus.READY);
         deliveryWithoutRider = new Delivery(2L, orderRequest, Date.from(Instant.now()), DeliveryStatus.READY, null);
     }
 

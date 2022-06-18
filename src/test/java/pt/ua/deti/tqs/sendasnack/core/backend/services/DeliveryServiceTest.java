@@ -99,7 +99,7 @@ class DeliveryServiceTest {
     @Test
     void save() {
         deliveryService.save(delivery);
-        verify(deliveryRepository, Mockito.times(1)).save(delivery);
+        verify(deliveryRepository, times(1)).save(delivery);
     }
 
 }

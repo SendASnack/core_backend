@@ -44,9 +44,6 @@ class RiderControllerIT {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private DeliveryRepository deliveryRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
