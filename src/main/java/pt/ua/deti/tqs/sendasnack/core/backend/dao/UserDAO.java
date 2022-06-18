@@ -3,11 +3,16 @@ package pt.ua.deti.tqs.sendasnack.core.backend.dao;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Generated;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.BusinessUser;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.AccountRoleEnum;
 
+import java.util.HashSet;
+
+@Generated
 @Data
 @AllArgsConstructor
-@Generated
 public class UserDAO implements IEntityDAO<User> {
 
     private String username;
@@ -19,7 +24,13 @@ public class UserDAO implements IEntityDAO<User> {
 
     @Override
     public User toDataEntity() {
-        return new User(username, email, password, name, phoneNumber, accountType);
+
+        if (accountType == AccountRoleEnum.BUSINESS) {
+            return new BusinessUser(username, email, password, name, phoneNumber);
+        } else {
+            return new RiderUser(username, email, password, name, phoneNumber, new HashSet<>(), new HashSet<>());
+        }
+
     }
 
 }

@@ -5,7 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
-import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,47 +16,43 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
+@ToString
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NonNull
-    private String businessUsername;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "costumer_id")
+    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
+    @JoinColumn(name = "order_request_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Costumer costumer;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Order order;
+    private OrderRequest orderRequest;
 
     @NonNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date deliveryTime;
+    private Date deliveryPrediction;
 
-    private OrderStatus orderStatus;
+    private DeliveryStatus deliveryStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "accepted_by_rider_id")
+    private RiderUser rider;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderRequest that = (OrderRequest) o;
-        return Objects.equals(id, that.id) && businessUsername.equals(that.businessUsername) && Objects.equals(costumer, that.costumer) && Objects.equals(order, that.order) && orderStatus == that.orderStatus;
+        Delivery delivery = (Delivery) o;
+        return Objects.equals(id, delivery.id) && Objects.equals(orderRequest, delivery.orderRequest) && deliveryPrediction.equals(delivery.deliveryPrediction) && Objects.equals(rider, delivery.rider);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, businessUsername, costumer, order, deliveryTime, orderStatus);
+        return Objects.hash(id, orderRequest, deliveryPrediction, rider);
     }
 
 }

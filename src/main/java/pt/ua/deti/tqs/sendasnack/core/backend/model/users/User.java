@@ -1,8 +1,6 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.model;
+package pt.ua.deti.tqs.sendasnack.core.backend.model.users;
 
 import lombok.*;
-import org.hibernate.Hibernate;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,6 +12,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
 
     @Id
@@ -36,22 +35,17 @@ public class User {
     @NonNull
     private String phoneNumber;
 
-    @NonNull
-    @Enumerated(EnumType.STRING)
-    private AccountRoleEnum accountRoles;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && username.equals(user.username) && email.equals(user.email) && password.equals(user.password) && name.equals(user.name) && phoneNumber.equals(user.phoneNumber) && accountRoles == user.accountRoles;
+        return Objects.equals(id, user.id) && username.equals(user.username) && email.equals(user.email) && password.equals(user.password) && name.equals(user.name) && phoneNumber.equals(user.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password, name, phoneNumber, accountRoles);
+        return Objects.hash(id, username, email, password, name, phoneNumber);
     }
 
 }

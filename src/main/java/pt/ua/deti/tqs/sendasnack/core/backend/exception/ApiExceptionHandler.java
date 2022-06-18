@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 
 @ControllerAdvice
@@ -40,6 +41,12 @@ public class ApiExceptionHandler {
     public ResponseEntity<?> forbiddenOperationException(ForbiddenOperationException forbiddenOperationException, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), forbiddenOperationException.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<?> entityNotFoundException(EntityNotFoundException entityNotFoundException, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), entityNotFoundException.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
 }

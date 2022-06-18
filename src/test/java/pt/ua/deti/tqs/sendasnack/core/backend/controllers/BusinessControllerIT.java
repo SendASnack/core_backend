@@ -16,13 +16,13 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.utility.DockerImageName;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderRequest;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderStatus;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.OrderRequestRepository;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.LoginRequest;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.OrderRequestService;
 
@@ -120,6 +120,8 @@ class BusinessControllerIT {
     void createOrder() {
 
         assertThat(orderRequestService.getAllOrders()).isNotNull().isEmpty();
+
+        orderRequest.setId(null);
 
         ResponseEntity<MessageResponse> response = restTemplate.postForEntity("/api/business/orders", new HttpEntity<>(orderRequest, httpHeaders), MessageResponse.class);
 

@@ -110,8 +110,6 @@ class OrderRequestServiceTest {
 
     @Test
     void save() {
-        System.out.println(orderRequestService);
-        System.out.println(orderRequest);
         orderRequestService.save(orderRequest);
         verify(orderRequestRepository, Mockito.times(1)).save(orderRequest);
     }

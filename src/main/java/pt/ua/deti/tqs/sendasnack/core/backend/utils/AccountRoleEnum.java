@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.dao;
+package pt.ua.deti.tqs.sendasnack.core.backend.utils;
 
 import org.springframework.security.core.GrantedAuthority;
 
