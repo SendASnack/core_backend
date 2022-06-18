@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @AutoConfigureMockMvc(addFilters = false)
-class WebHooksControllerTest {
+class WebHooksControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -46,9 +46,6 @@ class WebHooksControllerTest {
     private WebHookService webHookService;
 
     private WebHook webHook;
-
-    private UserDAO riderUserDAO;
-    private UserDAO businessUserDAO;
 
     private HttpHeaders riderHttpHeaders;
     private HttpHeaders businessHttpHeaders;
@@ -73,8 +70,8 @@ class WebHooksControllerTest {
     @BeforeEach
     void setUp() {
 
-        riderUserDAO = new UserDAO("Hugo1307", "hugo@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.RIDER);
-        businessUserDAO = new UserDAO("Hugo1307_B", "hugo_business@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.BUSINESS);
+        UserDAO riderUserDAO = new UserDAO("Hugo1307", "hugo@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.RIDER);
+        UserDAO businessUserDAO = new UserDAO("Hugo1307_B", "hugo_business@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.BUSINESS);
 
         try {
             restTemplate.postForEntity("/api/auth/register", riderUserDAO, MessageResponse.class);
