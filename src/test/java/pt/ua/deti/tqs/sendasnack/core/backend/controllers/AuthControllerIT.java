@@ -17,12 +17,12 @@ import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.ErrorDetails;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.LoginRequest;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
@@ -63,7 +63,7 @@ class AuthControllerIT {
 
     @BeforeEach
     public void setUp() {
-        userDAO = new UserDAO("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.RIDER);
+        userDAO = new UserDAO("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.BUSINESS);
         userService.removeAll();
     }
 

@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.requests;
+package pt.ua.deti.tqs.sendasnack.core.backend.utils;
 
 import lombok.Data;
 import lombok.Generated;

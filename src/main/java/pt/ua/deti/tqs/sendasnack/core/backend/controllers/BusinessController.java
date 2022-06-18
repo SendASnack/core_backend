@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.*;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.ForbiddenOperationException;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.IllegalOrderStatusException;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.OrderNotFoundException;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.Delivery;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderRequest;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderStatus;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthHandler;
+import pt.ua.deti.tqs.sendasnack.core.backend.services.DeliveryService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.OrderRequestService;
 
 import java.util.List;
@@ -20,11 +23,13 @@ public class BusinessController {
 
     private final AuthHandler authHandler;
     private final OrderRequestService orderRequestService;
+    private final DeliveryService deliveryService;
 
     @Autowired
-    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService) {
+    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService, DeliveryService deliveryService) {
         this.authHandler = authHandler;
         this.orderRequestService = orderRequestService;
+        this.deliveryService = deliveryService;
     }
 
     @PostMapping("/orders")
@@ -36,6 +41,9 @@ public class BusinessController {
         orderRequest.setBusinessUsername(authHandler.getCurrentUsername());
 
         orderRequestService.save(orderRequest);
+
+        Delivery delivery = new Delivery(null, orderRequest, orderRequest.getDeliveryTime(), DeliveryStatus.READY, null);
+        deliveryService.save(delivery);
 
         return new MessageResponse("Your order was successfully placed.");
 
@@ -77,6 +85,9 @@ public class BusinessController {
 
         if (!orderRequest.getBusinessUsername().equals(authHandler.getCurrentUsername()))
             throw new ForbiddenOperationException("You don't have permission to edit that order.");
+
+        if (orderStatus == OrderStatus.READY)
+            deliveryService.save(new Delivery(null, orderRequest, orderRequest.getDeliveryTime(), DeliveryStatus.READY, null));
 
         orderRequest.setOrderStatus(orderStatus);
         orderRequestService.save(orderRequest);

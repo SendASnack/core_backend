@@ -5,7 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.AlreadyExistentUserException;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.UserNotFoundException;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
 
 import java.util.List;
@@ -52,6 +52,10 @@ public class UserService {
 
     public void removeAll() {
         userRepository.deleteAll();
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 
 }

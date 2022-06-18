@@ -9,10 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
-import pt.ua.deti.tqs.sendasnack.core.backend.services.SpringUserDetailsService;
-import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 
 import java.util.Collections;
 
@@ -34,7 +31,7 @@ class SpringUserDetailsServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.RIDER);
+        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910");
         userDetails = new org.springframework.security.core.userdetails.User("Hugo1307", "123456", Collections.emptyList());
     }
 
