@@ -6,13 +6,11 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.Forbidde
 import pt.ua.deti.tqs.sendasnack.core.backend.model.Delivery;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
-import pt.ua.deti.tqs.sendasnack.core.backend.utils.AvailabilityStatus;
-import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryFilter;
-import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
-import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.*;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthHandler;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.DeliveryService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
+import pt.ua.deti.tqs.sendasnack.core.backend.webhooks.WebHookHandler;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -27,12 +25,14 @@ public class RiderController {
     private final UserService userService;
     private final DeliveryService deliveryService;
     private final AuthHandler authHandler;
+    private final WebHookHandler webHookHandler;
 
     @Autowired
-    public RiderController(UserService userService, DeliveryService deliveryService, AuthHandler authHandler) {
+    public RiderController(UserService userService, DeliveryService deliveryService, AuthHandler authHandler, WebHookHandler webHookHandler) {
         this.userService = userService;
         this.deliveryService = deliveryService;
         this.authHandler = authHandler;
+        this.webHookHandler = webHookHandler;
     }
 
     @PatchMapping("/deliveries/{deliveryId}/accept")
@@ -103,6 +103,8 @@ public class RiderController {
 
         delivery.setDeliveryStatus(deliveryStatus);
         deliveryService.save(delivery);
+
+        webHookHandler.notifyAllHooks(authHandler.getCurrentUsername(), WebHookEvent.DELIVERY_STATUS, deliveryStatus.toString(), deliveryId);
 
         return new MessageResponse(String.format("Delivery status changed to %s.", deliveryStatus));
 
