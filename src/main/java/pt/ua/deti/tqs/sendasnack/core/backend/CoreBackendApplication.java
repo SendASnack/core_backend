@@ -22,7 +22,7 @@ public class CoreBackendApplication {
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000", "http://20.77.90.223:3000", "http://20.77.90.223:3001", "http://20.77.90.223:8081")
-                        .allowedMethods("GET", "POST","PUT", "DELETE");
+                        .allowedMethods("GET", "POST","PUT", "DELETE", "PATCH");
             }
 
         };
