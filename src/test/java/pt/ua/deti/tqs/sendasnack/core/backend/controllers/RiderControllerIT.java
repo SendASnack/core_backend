@@ -22,7 +22,7 @@ import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.OrderRequestRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.DeliveryService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.*;
@@ -83,7 +83,7 @@ class RiderControllerIT {
         userDAO = new UserDAO("Hugo1307", "hugo@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.RIDER);
 
         restTemplate.postForEntity("/api/auth/register", userDAO, MessageResponse.class);
-        ResponseEntity<AuthTokenResponse> response = restTemplate.postForEntity("/api/auth/login", new LoginRequest(userDAO.getEmail(), userDAO.getPassword()), AuthTokenResponse.class);
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("/api/auth/login", new LoginRequest(userDAO.getEmail(), userDAO.getPassword()), LoginResponse.class);
 
         httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(response.getBody().getToken());

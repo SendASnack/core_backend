@@ -7,10 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.BadRequestException;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.JWTTokenUtils;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.SpringUserDetailsService;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
@@ -46,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthTokenResponse loginUser(@RequestBody LoginRequest loginRequest) {
+    public LoginResponse loginUser(@RequestBody LoginRequest loginRequest) {
 
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
@@ -61,7 +62,14 @@ public class AuthController {
             throw new BadCredentialsException("The provided password is wrong.");
 
         String token = jwtTokenUtils.generateToken(userDetails);
-        return new AuthTokenResponse("Authentication succeeded.", token);
+
+        if (user instanceof RiderUser) {
+            ((RiderUser) user).setAvailabilityStatus(null);
+            ((RiderUser) user).setRejectedDeliveries(null);
+            ((RiderUser) user).setAcceptedDeliveries(null);
+        }
+
+        return new LoginResponse("Authentication succeeded.", token, user);
 
     }
 
