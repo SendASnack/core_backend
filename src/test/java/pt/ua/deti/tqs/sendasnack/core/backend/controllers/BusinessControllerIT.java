@@ -23,7 +23,7 @@ import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.OrderRequestRepository;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.OrderRequestService;
 
 import java.io.IOException;
@@ -72,7 +72,7 @@ class BusinessControllerIT {
         UserDAO user = new UserDAO("Hugo1307", "hugo@ua.pt", "123456", "Hugo", "91", AccountRoleEnum.RIDER);
 
         restTemplate.postForEntity("/api/auth/register", user, MessageResponse.class);
-        ResponseEntity<AuthTokenResponse> response = restTemplate.postForEntity("/api/auth/login", new LoginRequest(user.getEmail(), user.getPassword()), AuthTokenResponse.class);
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("/api/auth/login", new LoginRequest(user.getEmail(), user.getPassword()), LoginResponse.class);
 
         httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(response.getBody().getToken());

@@ -20,7 +20,7 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.AlreadyE
 import pt.ua.deti.tqs.sendasnack.core.backend.model.webhooks.Hook;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.webhooks.WebHook;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.WebHookRepository;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.WebHookService;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
@@ -82,8 +82,8 @@ class WebHooksControllerIT {
             // We are not interested in those right now, so we ignore it.
         }
 
-        ResponseEntity<AuthTokenResponse> loginResponseRider = restTemplate.postForEntity("/api/auth/login", new LoginRequest(riderUserDAO.getEmail(), riderUserDAO.getPassword()), AuthTokenResponse.class);
-        ResponseEntity<AuthTokenResponse> loginResponseBusiness = restTemplate.postForEntity("/api/auth/login", new LoginRequest(businessUserDAO.getEmail(), businessUserDAO.getPassword()), AuthTokenResponse.class);
+        ResponseEntity<LoginResponse> loginResponseRider = restTemplate.postForEntity("/api/auth/login", new LoginRequest(riderUserDAO.getEmail(), riderUserDAO.getPassword()), LoginResponse.class);
+        ResponseEntity<LoginResponse> loginResponseBusiness = restTemplate.postForEntity("/api/auth/login", new LoginRequest(businessUserDAO.getEmail(), businessUserDAO.getPassword()), LoginResponse.class);
 
         riderHttpHeaders = new HttpHeaders();
         riderHttpHeaders.setBearerAuth(loginResponseRider.getBody().getToken());

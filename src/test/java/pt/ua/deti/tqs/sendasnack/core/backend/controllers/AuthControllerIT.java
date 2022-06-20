@@ -23,7 +23,7 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.ErrorDetails;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
 import java.time.Duration;
@@ -101,13 +101,13 @@ class AuthControllerIT {
 
         LoginRequest loginRequest = new LoginRequest(userDAO.getEmail(), userDAO.getPassword());
 
-        ResponseEntity<AuthTokenResponse> response = restTemplate.postForEntity("/api/auth/login", loginRequest, AuthTokenResponse.class);
-        AuthTokenResponse authTokenResponse = response.getBody();
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("/api/auth/login", loginRequest, LoginResponse.class);
+        LoginResponse loginResponse = response.getBody();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(authTokenResponse).isNotNull();
-        assertThat(authTokenResponse).extracting(AuthTokenResponse::getToken).isNotNull();
-        assertThat(authTokenResponse).extracting(AuthTokenResponse::getMessage).isEqualTo("Authentication succeeded.");
+        assertThat(loginResponse).isNotNull();
+        assertThat(loginResponse).extracting(LoginResponse::getToken).isNotNull();
+        assertThat(loginResponse).extracting(LoginResponse::getMessage).isEqualTo("Authentication succeeded.");
 
     }
 
