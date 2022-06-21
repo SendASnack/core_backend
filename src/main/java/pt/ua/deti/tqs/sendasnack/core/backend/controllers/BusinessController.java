@@ -49,12 +49,12 @@ public class BusinessController {
 
         orderRequest.setBusinessUsername(authHandler.getCurrentUsername());
 
-        orderRequestService.save(orderRequest);
+        Long orderId = orderRequestService.save(orderRequest);
 
         Delivery delivery = new Delivery(null, orderRequest, orderRequest.getDeliveryTime(), DeliveryStatus.READY, null);
         deliveryService.save(delivery);
 
-        return new MessageResponse("Your order was successfully placed.");
+        return new MessageResponse("Your order was successfully placed.", orderId);
 
     }
 
