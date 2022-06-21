@@ -49,9 +49,9 @@ public class BusinessController {
 
         orderRequest.setBusinessUsername(authHandler.getCurrentUsername());
 
-        orderRequestService.save(orderRequest);
+        Long orderId = orderRequestService.save(orderRequest);
 
-        return new MessageResponse("Your order was successfully placed.");
+        return new MessageResponse("Your order was successfully placed.", orderId);
 
     }
 
