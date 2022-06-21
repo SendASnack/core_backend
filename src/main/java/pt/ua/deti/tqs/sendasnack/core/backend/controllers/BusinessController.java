@@ -51,9 +51,6 @@ public class BusinessController {
 
         orderRequestService.save(orderRequest);
 
-        Delivery delivery = new Delivery(null, orderRequest, orderRequest.getDeliveryTime(), DeliveryStatus.READY, null);
-        deliveryService.save(delivery);
-
         return new MessageResponse("Your order was successfully placed.");
 
     }
