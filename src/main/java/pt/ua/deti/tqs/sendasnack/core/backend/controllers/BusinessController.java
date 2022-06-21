@@ -7,6 +7,9 @@ import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.IllegalO
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.OrderNotFoundException;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.Delivery;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.OrderRequest;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.BusinessUser;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
@@ -27,13 +30,15 @@ public class BusinessController {
     private final OrderRequestService orderRequestService;
     private final DeliveryService deliveryService;
     private final WebHookHandler webHookHandler;
+    private final UserService userService;
 
     @Autowired
-    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService, DeliveryService deliveryService, WebHookHandler webHookHandler) {
+    public BusinessController(AuthHandler authHandler, OrderRequestService orderRequestService, DeliveryService deliveryService, WebHookHandler webHookHandler, UserService userService) {
         this.authHandler = authHandler;
         this.orderRequestService = orderRequestService;
         this.deliveryService = deliveryService;
         this.webHookHandler = webHookHandler;
+        this.userService = userService;
     }
 
     @PostMapping("/orders")
@@ -122,6 +127,19 @@ public class BusinessController {
     @GetMapping("/orders")
     public List<OrderRequest> getAllOrders() {
         return orderRequestService.getAllOrdersFromBusiness(authHandler.getCurrentUsername());
+    }
+
+    @GetMapping("/profile")
+    public User getBusinessProfile() {
+
+        User user = userService.findByUsername(authHandler.getCurrentUsername());
+
+        if (!(user instanceof BusinessUser)) {
+            throw new ForbiddenOperationException("You must be a business to request this resource.");
+        }
+
+        return user;
+
     }
 
 }
