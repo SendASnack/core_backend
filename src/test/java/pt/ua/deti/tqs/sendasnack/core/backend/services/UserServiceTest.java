@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.service;
+package pt.ua.deti.tqs.sendasnack.core.backend.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,12 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.AlreadyExistentUserException;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.implementations.UserNotFoundException;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 import pt.ua.deti.tqs.sendasnack.core.backend.repository.UserRepository;
-import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -34,7 +32,7 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.RIDER);
+        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910");
     }
 
     @Test

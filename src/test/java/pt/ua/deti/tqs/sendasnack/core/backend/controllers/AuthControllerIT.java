@@ -1,4 +1,4 @@
-package pt.ua.deti.tqs.sendasnack.core.backend.controller;
+package pt.ua.deti.tqs.sendasnack.core.backend.controllers;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,13 +17,13 @@ import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.AccountRoleEnum;
 import pt.ua.deti.tqs.sendasnack.core.backend.dao.UserDAO;
 import pt.ua.deti.tqs.sendasnack.core.backend.exception.ErrorDetails;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.LoginRequest;
-import pt.ua.deti.tqs.sendasnack.core.backend.requests.MessageResponse;
-import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.AuthTokenResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.LoginRequest;
+import pt.ua.deti.tqs.sendasnack.core.backend.utils.MessageResponse;
+import pt.ua.deti.tqs.sendasnack.core.backend.security.auth.LoginResponse;
 import pt.ua.deti.tqs.sendasnack.core.backend.services.UserService;
 
 import java.time.Duration;
@@ -45,7 +45,7 @@ class AuthControllerIT {
     private UserDAO userDAO;
 
     @Container
-    public static MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
+    public static final MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
             .withDatabaseName("SendASnack_Core_Test")
             .withUsername("admin")
             .withPassword("admin")
@@ -63,7 +63,7 @@ class AuthControllerIT {
 
     @BeforeEach
     public void setUp() {
-        userDAO = new UserDAO("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.RIDER);
+        userDAO = new UserDAO("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.BUSINESS);
         userService.removeAll();
     }
 
@@ -101,13 +101,13 @@ class AuthControllerIT {
 
         LoginRequest loginRequest = new LoginRequest(userDAO.getEmail(), userDAO.getPassword());
 
-        ResponseEntity<AuthTokenResponse> response = restTemplate.postForEntity("/api/auth/login", loginRequest, AuthTokenResponse.class);
-        AuthTokenResponse authTokenResponse = response.getBody();
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("/api/auth/login", loginRequest, LoginResponse.class);
+        LoginResponse loginResponse = response.getBody();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(authTokenResponse).isNotNull();
-        assertThat(authTokenResponse).extracting(AuthTokenResponse::getToken).isNotNull();
-        assertThat(authTokenResponse).extracting(AuthTokenResponse::getMessage).isEqualTo("Authentication succeeded.");
+        assertThat(loginResponse).isNotNull();
+        assertThat(loginResponse).extracting(LoginResponse::getToken).isNotNull();
+        assertThat(loginResponse).extracting(LoginResponse::getMessage).isEqualTo("Authentication succeeded.");
 
     }
 

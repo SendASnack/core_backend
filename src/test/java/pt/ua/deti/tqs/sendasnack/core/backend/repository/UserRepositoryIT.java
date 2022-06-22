@@ -13,8 +13,7 @@ import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import pt.ua.deti.tqs.sendasnack.core.backend.dao.AccountRoleEnum;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.User;
+import pt.ua.deti.tqs.sendasnack.core.backend.model.users.User;
 
 import java.time.Duration;
 
@@ -30,7 +29,7 @@ public class UserRepositoryIT {
     private User user;
 
     @Container
-    public static MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
+    public static final MariaDBContainer<?> mariaDb = new MariaDBContainer<>(DockerImageName.parse("mariadb"))
             .withDatabaseName("SendASnack_Core_Test")
             .withUsername("admin")
             .withPassword("admin")
@@ -48,7 +47,7 @@ public class UserRepositoryIT {
 
     @BeforeEach
     void setUp() {
-        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910", AccountRoleEnum.RIDER);
+        user = new User("Hugo1307", "hugogoncalves13@ua.pt", "12345", "Hugo", "910");
     }
 
     @AfterEach
