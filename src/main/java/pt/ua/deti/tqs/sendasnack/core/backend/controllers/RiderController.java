@@ -57,7 +57,7 @@ public class RiderController {
         ((RiderUser) rider).getAcceptedDeliveries().add(delivery);
         userService.save(rider);
 
-        delivery.setRider((RiderUser) rider);
+        delivery.setRiderUsername(rider.getUsername());
         deliveryService.save(delivery);
 
         return new MessageResponse("Delivery successfully accepted.");

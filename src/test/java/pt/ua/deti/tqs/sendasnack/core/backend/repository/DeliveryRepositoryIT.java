@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import pt.ua.deti.tqs.sendasnack.core.backend.model.*;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.OrderStatus;
 
@@ -63,12 +62,12 @@ class DeliveryRepositoryIT {
     @Test
     void findAllByRiderUsernameIsNull() {
 
-        assertThat(deliveryRepository.findAllByRiderIsNull()).isNotNull().isEmpty();
+        assertThat(deliveryRepository.findAllByRiderUsernameIsNull()).isNotNull().isEmpty();
 
         deliveryRepository.save(deliveryWithoutRider);
 
-        assertThat(deliveryRepository.findAllByRiderIsNull()).isNotNull().hasSize(1);
-        assertThat(deliveryRepository.findAllByRiderIsNull()).isNotNull().extracting(Delivery::getRider).containsOnly((RiderUser) null);
+        assertThat(deliveryRepository.findAllByRiderUsernameIsNull()).isNotNull().hasSize(1);
+        assertThat(deliveryRepository.findAllByRiderUsernameIsNull()).isNotNull().extracting(Delivery::getRiderUsername).containsOnly((String) null);
 
     }
 
@@ -82,7 +81,7 @@ class DeliveryRepositoryIT {
         assertThat(deliveryRepository.findById(1L)).isNotNull().isNotEmpty();
         assertThat(deliveryRepository.findById(1L)).get().extracting(Delivery::getId).isEqualTo(1L);
         assertThat(deliveryRepository.findById(1L)).get().extracting(Delivery::getDeliveryStatus).isEqualTo(DeliveryStatus.READY);
-        assertThat(deliveryRepository.findById(1L)).get().extracting(Delivery::getRider).isEqualTo(null);
+        assertThat(deliveryRepository.findById(1L)).get().extracting(Delivery::getRiderUsername).isEqualTo(null);
 
 
     }

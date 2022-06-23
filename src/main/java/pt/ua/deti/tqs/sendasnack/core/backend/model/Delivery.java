@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
-import pt.ua.deti.tqs.sendasnack.core.backend.model.users.RiderUser;
 import pt.ua.deti.tqs.sendasnack.core.backend.utils.DeliveryStatus;
 
 import javax.persistence.*;
@@ -36,23 +35,24 @@ public class Delivery {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deliveryPrediction;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "delivery_status")
     private DeliveryStatus deliveryStatus;
 
-    @ManyToOne
     @JoinColumn(name = "accepted_by_rider_id")
-    private RiderUser rider;
+    private String riderUsername;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Delivery delivery = (Delivery) o;
-        return Objects.equals(id, delivery.id) && Objects.equals(orderRequest, delivery.orderRequest) && deliveryPrediction.equals(delivery.deliveryPrediction) && Objects.equals(rider, delivery.rider);
+        return Objects.equals(id, delivery.id) && Objects.equals(orderRequest, delivery.orderRequest) && deliveryPrediction.equals(delivery.deliveryPrediction) && deliveryStatus == delivery.deliveryStatus && Objects.equals(riderUsername, delivery.riderUsername);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderRequest, deliveryPrediction, rider);
+        return Objects.hash(id, orderRequest, deliveryPrediction, deliveryStatus, riderUsername);
     }
 
 }
