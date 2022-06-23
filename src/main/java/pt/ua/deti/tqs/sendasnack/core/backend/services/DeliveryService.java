@@ -26,7 +26,7 @@ public class DeliveryService {
      * @return a list of all deliveries that have to be picked up by a rider.
      */
     public List<Delivery> getAllFreeDeliveries() {
-        return deliveryRepository.findAllByRiderIsNull();
+        return deliveryRepository.findAllByRiderUsernameIsNull();
     }
 
     /**
