@@ -30,7 +30,8 @@ public class RiderUser extends User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Delivery> rejectedDeliveries = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "rider", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "rider_user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Delivery> acceptedDeliveries = new LinkedHashSet<>();
 

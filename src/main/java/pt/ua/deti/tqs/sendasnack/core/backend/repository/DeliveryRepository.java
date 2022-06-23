@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
-    List<Delivery> findAllByRiderIsNull();
+    List<Delivery> findAllByRiderUsernameIsNull();
 
     @NonNull Optional<Delivery> findById(@NonNull Long id);
 

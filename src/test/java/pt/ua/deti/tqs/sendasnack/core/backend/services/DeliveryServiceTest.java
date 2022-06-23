@@ -74,12 +74,12 @@ class DeliveryServiceTest {
 
         assertThat(deliveryService.getAllFreeDeliveries()).isNotNull().isEmpty();
 
-        when(deliveryRepository.findAllByRiderIsNull()).thenReturn(Collections.singletonList(delivery));
+        when(deliveryRepository.findAllByRiderUsernameIsNull()).thenReturn(Collections.singletonList(delivery));
 
         assertThat(deliveryService.getAllFreeDeliveries()).isNotNull().hasSize(1);
         assertThat(deliveryService.getAllFreeDeliveries()).isNotNull().containsOnly(delivery);
 
-        verify(deliveryRepository, times(3)).findAllByRiderIsNull();
+        verify(deliveryRepository, times(3)).findAllByRiderUsernameIsNull();
 
     }
 
